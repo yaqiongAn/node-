@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      div{
+        width:300px;
+        height:300px;
+        margin:20px auto;
+        text-align: center;
+      }
+      a{
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="">
+      <h1>欢迎登录</h1>
+      <input id="user" type="text" name="" value="" placeholder="用户名">
+      <br>
+      <input id="pass" type="text" name="" value="" placeholder="密码">
+      <br>
+      <button id="sure" type="button" name="button"><a href="#">确认登录</a></button>
+      <button id="zhuce" type="button" name="button"><a href="register.html">注册</a></button>
+    </div>
+
+  </body>
+  <script type="text/javascript">
+    var btn=document.querySelector('#sure');
+    btn.onclick=function(){
+      var user=document.querySelector('#user').value;
+      var pass=document.querySelector('#pass').value;
+
+      var xhr=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObj('Microsoft.XMLHTTP');
+      xhr.open('GET','http://127.0.0.1:8888/login?user='+user+'&pass='+pass);
+      xhr.send(null);
+      xhr.onreadystatechange=function(){
+        if (xhr.readyState==4&&xhr.status==200) {
+          console.log(xhr.responseText);
+          var obj=JSON.parse(xhr.responseText);
+          if (obj.code==1) {
+            alert('登陆成功')
+          }else if(obj.code==0){
+            alert('登陆失败')
+          }
+        }
+      }
+    }
+
+  </script>
+</html>

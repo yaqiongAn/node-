@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="">
+      <h1>欢迎注册</h1>
+      <input id="user" type="text" name="" value="" placeholder="用户名">
+      <br>
+      <input id="pass" type="text" name="" value="" placeholder="密码">
+      <br>
+      <input id="queren" type="text" name="" value="" placeholder="确认密码">
+      <button id="btn" type="button" name="button">确认注册</button>
+    </div>
+
+  </body>
+  <script type="text/javascript">
+  window.onload=function(){
+    var queren=document.querySelector('#queren');
+
+    queren.onblur=function(){
+      var pass=document.querySelector('#pass').value;
+      var querenS=document.querySelector('#queren').value;
+
+      if (querenS!==pass) {
+        alert('两次密码不一致，请重新输入')
+      }
+    }
+      var btn=document.querySelector('#btn');
+      btn.onclick=function(){
+        var user=document.querySelector('#user').value;
+        var pass=document.querySelector('#pass').value;
+
+        var xhr=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObj('Microsoft.XMLHTTP');
+        xhr.open('POST','http://127.0.0.1:8888/register');
+        xhr.send('user='+user+'&pass='+pass);
+        xhr.onreadystatechange=function(){
+          if (xhr.readyState==4&&xhr.status==200) {
+            console.log(xhr.responseText);
+            var obj=JSON.parse(xhr.responseText);
+            if (obj.code==1) {
+              alert('注册成功')
+            }else if(obj.code==0){
+              alert('用户已存在')
+            }
+          }
+        }
+      }
+  }
+
+
+  </script>
+</html>
